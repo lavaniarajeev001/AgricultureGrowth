@@ -47,15 +47,14 @@ def add_sidebar():
 
     return input_dict
 
-
-def get_renderers_Framework(input_dict):
-    data_values = list(map(float, input_dict.values()))
-    fig = go.Figure(data=[go.Bar(x=data_values)],
-                    layout_title_text="A Figure Displayed with fig.show()")
-    fig = go.Figure()   
+def get_graph(input_dict):
+    X=["Random","ACPH","PHR","AWWGV","ALAP","ANPL","ARD","ADWR","PDMVG","ARL","AWWR","ADWV","PDMRG"]
+    Y=[input_dict["Random"],input_dict["ACPH"],input_dict["PHR"],input_dict["AWWGV"],input_dict["ALAP"],input_dict["ANPL"],input_dict["ARD"],input_dict["ADWR"],
+       input_dict["PDMVG"],input_dict["ARL"],input_dict["AWWR"],input_dict["ADWV"],input_dict["PDMRG"]]
+    fig = px.bar(x=X, y=Y, labels={'x': 'Attributes', 'y': 'Count'}, 
+                 title='Simple Bar Chart')
     return fig
-
-
+    
 def get_scaled_values(input_dict, scaler):
     input_array = np.array(list(input_dict.values())).reshape(1, -1)
     scaled_array = scaler.transform(input_array)
@@ -88,7 +87,7 @@ def main():
     col1,col2 = st.columns([4,1])
 
     with col1:
-        renderers = get_renderers_Framework(input_data)
+        renderers = get_graph(input_data)
         st.plotly_chart(renderers)
     with col2:
         if st.button("Predict"):
